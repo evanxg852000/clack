@@ -8,7 +8,7 @@ It's still a work in progress (testing).
 
 ## demo
 
-`$ ./demo -- foo --name jane`
+`$ ./demo foo --name jane`
 
 ```zig
 const std = @import("std");
