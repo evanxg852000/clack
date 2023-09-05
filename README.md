@@ -8,6 +8,8 @@ It's still a work in progress (testing).
 
 ## demo
 
+`$ ./demo -- foo --name jane`
+
 ```zig
 const std = @import("std");
 const clack = @import("clack");
@@ -20,7 +22,6 @@ const AppHandler = struct {
 };
 
 pub fn main() !void {
-    // ./main -- foo --name jane
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
