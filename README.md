@@ -2,9 +2,8 @@
 
 A command line parser for Zig ⚡
 
-# ⚠️ IMPORTANT
-
-Please, do not rely on this library production work. It's still a work in progress (testing).
+⚠️ Warning: please, do not rely on this library for production work. 
+It's still a work in progress (testing).
 
 
 ## demo
