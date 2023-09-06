@@ -476,14 +476,25 @@ pub const App = struct {
     pub fn run(self: *Self, args: [][] const u8) !void {
         var error_msg = ArrayList(u8).init(self.allocator);
         defer error_msg.deinit();
-        if (args.len == 0 or !std.mem.endsWith(
+        const error_writer = error_msg.writer();
+
+        if (args.len <= 1 ) {
+            try error_writer.print("Error: no command specified: `{s}`.\n", .{self.root.name});
+            try self.usage(error_writer);
+            return self.error_handler(CliError.NotEnoughInput, error_msg.items);
+        }
+        
+        if (!std.mem.endsWith(
             u8,
             args[0],
             self.root.name,
         )) {
+            try error_writer.print("Error: app name doesn't match: `{s}`.\n", .{self.root.name});
+            try self.usage(error_writer);
             return self.error_handler(CliError.AppNameMissmatch, error_msg.items);
         }
-        self.root.parse(args[1..], error_msg.writer()) catch |err| {
+
+        self.root.parse(args[1..], error_writer) catch |err| {
             return self.error_handler(err, error_msg.items);
         };
     }

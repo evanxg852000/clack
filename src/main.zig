@@ -3,6 +3,7 @@ const std = @import("std");
 pub const parser = @import("./parser.zig");
 
 pub const App = parser.App;
+pub const Command = parser.Command;
 pub const Argument = parser.Argument;
 pub const Flag = parser.Flag;
 

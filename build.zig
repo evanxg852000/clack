@@ -29,6 +29,19 @@ pub fn build(b: *std.Build) void {
     // running `zig build`).
     b.installArtifact(lib);
 
+    const clack = b.addModule("clack", .{
+        .source_file = .{ .path = "src/main.zig" },
+        .dependencies = &.{},
+    });
+    const demo_exe = b.addExecutable(.{
+        .name = "demo",
+        .root_source_file = .{ .path = "src/examples/demo.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
+    demo_exe.addModule("clack", clack);
+    b.installArtifact(demo_exe);
+
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
     const main_tests = b.addTest(.{

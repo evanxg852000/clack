@@ -14,12 +14,13 @@ pub fn main() !void {
     const allocator = gpa.allocator();
 
     var app = try clack.App
-        .init(allocator, "main")
-        .setDescription("description")
+        .init(allocator, "demo")
+        .setDescription("A simple command line app to demonstrate clack.")
         .addCommand(try clack.Command.init(allocator, "foo")
                 .setDescription("a command to display name")
                 .addArgument(clack.Argument.init("name", .string)
                     .setShort("n")
+                    .setRequired()
                     .setDescription("specify the name")
                 )
                 .setHandler(AppHandler.fooHandler)
