@@ -222,7 +222,7 @@ pub const Command = struct {
         };
     }
 
-    pub fn addComand(self: Self, command: Command) Self {
+    pub fn addCommand(self: Self, command: Command) Self {
         if (self.build_error) |_| return self;
 
         var build_error: ?anyerror = null;
@@ -455,10 +455,10 @@ pub const App = struct {
         };
     }
 
-    pub fn addComand(self: Self, command: Command) Self {
+    pub fn addCommand(self: Self, command: Command) Self {
         return Self{
             .version = self.version,
-            .root = self.root.addComand(command),
+            .root = self.root.addCommand(command),
             .error_handler = self.error_handler,
             .allocator = self.allocator,
         };
@@ -546,7 +546,7 @@ test "CommandConfig" {
     const arg = Command.find(cmd.arguments.items, "bool").?;
     try testing.expectEqual(arg.*, Argument{ .long = "bool", .atype = .boolean, .description = null, .short = null, .default_value = Value{ .boolean = false }, .required = false });
 
-    cmd = cmd.addComand(try Command.init(allocator, "bodo")
+    cmd = cmd.addCommand(try Command.init(allocator, "bodo")
         .setDescription("bodo-description")
         .addArgument(Argument.init("str", .string))
         .build());
@@ -571,7 +571,7 @@ fn build_app(allocator: std.mem.Allocator, cmd_handler_opt: ?CommandHandlerFn, e
         .init(allocator, "test")
         .setDescription("app-test-desc")
         .setErrorHandler(err_handler)
-        .addComand(try Command.init(allocator, "foo")
+        .addCommand(try Command.init(allocator, "foo")
             .setDescription("cmd-foo-desc")
             .addArgument(Argument.init("name", .string)
                 .setDescription("arg-name-desc")
@@ -585,7 +585,7 @@ fn build_app(allocator: std.mem.Allocator, cmd_handler_opt: ?CommandHandlerFn, e
             .setHandler(cmd_handler)
             .build()
         )
-        .addComand(try Command.init(allocator, "bar")
+        .addCommand(try Command.init(allocator, "bar")
             .setDescription("cmd-bar-desc")
             .addArgument(Argument.init("count", .integer)
                 .setDescription("arg-count-desc")
@@ -595,7 +595,7 @@ fn build_app(allocator: std.mem.Allocator, cmd_handler_opt: ?CommandHandlerFn, e
             .setHandler(cmd_handler)
             .build()
         )
-        .addComand(try Command.init(allocator, "baz")
+        .addCommand(try Command.init(allocator, "baz")
             .setDescription("cmd-baz-desc")
             .addArgument(Argument.init("count", .integer)
                 .setDescription("arg-count-desc")

@@ -15,7 +15,7 @@ const std = @import("std");
 const clack = @import("clack");
 
 const AppHandler = struct {
-    pub fn fooFandler(params: *std.StringHashMap(clack.Value)) !void {
+    pub fn fooHandler(params: *std.StringHashMap(clack.Value)) !void {
         const name = params.get("name").?;
         clack.println("Hello {s}", .{ name.string });
     }
@@ -29,13 +29,13 @@ pub fn main() !void {
     var app = try clack.App
         .init(allocator, "main")
         .setDescription("description")
-        .addComand(try clack.Command.init(allocator, "foo")
+        .addCommand(try clack.Command.init(allocator, "foo")
                 .setDescription("a command to display name")
                 .addArgument(clack.Argument.init("name", .string)
                     .setShort("n")
                     .setDescription("specify the name")
                 )
-                .setHandler(AppHandler.fooFandler)
+                .setHandler(AppHandler.fooHandler)
                 .build()
             )
         .build();
